@@ -51,8 +51,13 @@ updateSpeaker = async (req, res) => {
 			});
 		}
 		speaker.name = body.name;
-		speaker.time = body.time;
-		speaker.rating = body.rating;
+		speaker.age = body.age;
+		speaker.UserName = body.UserName;
+		speaker.email = body.email;
+		speaker.Password = body.Password;
+		speaker.city = body.city;
+		speaker.street = body.street;
+		speaker.building = body.building;
 		speaker
 			.save()
 			.then(() => {
