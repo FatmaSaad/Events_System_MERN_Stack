@@ -10,6 +10,7 @@ export const updateSpeakerById = (id, payload) => api.put(`/speaker/${id}`, payl
 export const deleteSpeakerById = id => api.delete(`/speaker/${id}`)
 export const getSpeakerById = id => api.get(`/speaker/${id}`)
 
+
 const apis = {
     insertSpeaker,
     getAllSpeakers,

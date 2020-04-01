@@ -1,5 +1,8 @@
-import SpeakersList from './SpeakersList'
-import SpeakersInsert from './SpeakersInsert'
-import SpeakersUpdate from './SpeakersUpdate'
+import SpeakersList from './Speakers/SpeakersList'
+import SpeakersInsert from './Speakers/SpeakersInsert'
+import SpeakersUpdate from './Speakers/SpeakersUpdate'
 
-export { SpeakersList, SpeakersInsert, SpeakersUpdate }
+import EventsList from './Events/EventsList'
+import EventsInsert from './Events/EventsInsert'
+import EventsUpdate from './Events/EventsUpdate'
+export { SpeakersList, SpeakersInsert, SpeakersUpdate ,EventsList, EventsInsert, EventsUpdate}

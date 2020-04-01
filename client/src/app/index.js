@@ -13,10 +13,7 @@ function App() {
             <Switch>
                 <Route path="/speakers/list" exact component={SpeakersList} />
                 <Route path="/speakers/create" exact component={SpeakersInsert} />
-                <Route
-                    path="/speakers/update/:id"
-                    exact
-                    component={SpeakersUpdate}
+                <Route path="/speakers/update/:id" exact component={SpeakersUpdate}
                 />
             </Switch>
         </Router>

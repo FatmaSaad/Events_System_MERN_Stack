@@ -1,7 +1,29 @@
 const Speaker = require("../models/speaker-model");
+// Upload Endpoint
+let image="";
+uploadImage = (req, res) => {
+    console.log ("upload path")
+	if (req.files === null) {
+		return res.status(400).json({ msg: "No file uploaded" });
+	}
+
+	const file = req.files.file;
+
+	file.mv(`../client/public/uploads/${file.name}`, err => {
+		if (err) {
+			console.error(err);
+			return res.status(500).send(err);
+		}
+		image=file.name;
+		res.json({ fileName: file.name, filePath: `${file.name}` });
+	});
+};
 
 createSpeaker = (req, res) => {
+	req.body.profileImg=image;
 	const body = req.body;
+	console.log ("body");
+	console.log (body)
 
 	if (!body) {
 		return res.status(400).json({
@@ -12,10 +34,7 @@ createSpeaker = (req, res) => {
 	console.log(Speaker);
 	const speaker = new Speaker(body);
 
-	if (!speaker) {
-		return res.status(400).json({ success: false, error: err });
-	}
-
+	
 	speaker
 		.save()
 		.then(() => {
@@ -34,6 +53,7 @@ createSpeaker = (req, res) => {
 };
 
 updateSpeaker = async (req, res) => {
+	console.log (req)
 	const body = req.body;
 
 	if (!body) {
@@ -130,4 +150,5 @@ module.exports = {
 	deleteSpeaker,
 	getSpeakers,
 	getSpeakerById,
+	uploadImage
 };

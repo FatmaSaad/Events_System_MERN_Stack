@@ -6,6 +6,7 @@ const Speaker = new Schema({
 	email: {type:String, required: true },
 	UserName:{type: String, required: true },
 	Password: {type:String, required: true },
+	profileImg: {type:String, required: false },
 	city: String,
 	street: String,
 	building: String,
