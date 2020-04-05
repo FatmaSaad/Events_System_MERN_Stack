@@ -1,9 +1,44 @@
 
 const Event = require("../models/event-model");
 
-createEvent = (req, res) => {
-	const body = req.body;
+let image="";
+uploadImage = (req, res) => {
+    console.log ("upload path")
+	if (req.files === null) {
+		return res.status(400).json({ msg: "No file uploaded" });
+	}
 
+	const file = req.files.file;
+
+	file.mv(`../client/public/uploads/${file.name}`, err => {
+		if (err) {
+			console.error(err);
+			return res.status(500).send(err);
+		}
+		image=file.name;
+		res.json({ fileName: file.name, filePath: `${file.name}` });
+	});
+};	
+
+getSpeakers = async (req, res) => {
+	await Speaker.find({}, (err, speaker) => {
+		if (err) {
+			return res.status(400).json({ success: false, error: err });
+		}
+		if (!speaker.length) {
+			return res
+				.status(404)
+				.json({ success: false, error: `Speaker not found` });
+		}
+        console.log(speaker);
+        //console.log(res);
+
+		return res.status(200).json({ success: true, data: speaker });
+	}).catch(err => console.log(err));
+};
+createEvent = (req, res) => {
+	req.body.profileImg=image;
+	const body = req.body;
 	if (!body) {
 		return res.status(400).json({
 			success: false,
@@ -130,4 +165,6 @@ module.exports = {
 	deleteEvent,
 	getEvents,
 	getEventById,
+	uploadImage,
+	getSpeakers
 };

@@ -5,8 +5,10 @@ const Event = new Schema({
     description:{type:String, required: false },
 	time: { type: [String], required: true },
 	rating: { type: Number, required: false },
-    mainSpeaker:{type:Number,ref:"speakers"},
-	otherSpeakers:[{type:Number,ref:"speakers"}],
+    mainSpeaker:{type:String,ref:"speakers"},
+    otherSpeakers:[{type:String,ref:"speakers"}],
+    profileImg: {type:String, required: false },
+
 },    { timestamps: true },
 )
 //mapping

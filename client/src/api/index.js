@@ -10,6 +10,12 @@ export const updateSpeakerById = (id, payload) => api.put(`/speaker/${id}`, payl
 export const deleteSpeakerById = id => api.delete(`/speaker/${id}`)
 export const getSpeakerById = id => api.get(`/speaker/${id}`)
 
+export const insertEvent = payload => api.post(`/event`, payload)
+export const getAllEvents = () => api.get(`/events`)
+export const updateEventById = (id, payload) => api.put(`/event/${id}`, payload)
+export const deleteEventById = id => api.delete(`/event/${id}`)
+export const getEventById = id => api.get(`/event/${id}`)
+
 
 const apis = {
     insertSpeaker,
@@ -17,6 +23,12 @@ const apis = {
     updateSpeakerById,
     deleteSpeakerById,
     getSpeakerById,
+
+    insertEvent,
+    getAllEvents,
+    updateEventById,
+    deleteEventById,
+    getEventById,
 }
 
 export default apis

@@ -196,7 +196,7 @@ class SpeakersInsert extends Component {
 						<i className="fab fa-react" /> Upload Image
 					</h4>
 
-					<FileUpload />
+					<FileUpload Key="fromSpeaker"/>
 				</div>
 				<Button onClick={this.handleIncludeSpeaker}>Add Speaker</Button>
 				<CancelButton href={"/speakers/list"}>Cancel</CancelButton>

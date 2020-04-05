@@ -1,5 +1,4 @@
 const Speaker = require("../models/speaker-model");
-// Upload Endpoint
 let image="";
 uploadImage = (req, res) => {
     console.log ("upload path")

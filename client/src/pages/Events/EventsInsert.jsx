@@ -1,200 +1,221 @@
-// import React, { Component } from "react";
-// import api from "../../api";
-// import styled from "styled-components";
-// import { DropdownList } from "react-widgets";
-// const Title = styled.h1.attrs({
-// 	className: "h1",
-// })``;
+import React, { Component } from "react";
+import api from "../../api";
+import styled from "styled-components";
+import FileUpload from "../../components/FileUpload";
+import { Dropdown, DropdownButton, ButtonGroup } from "react-bootstrap";
+import Select from "react-select";
+let SpeakersMenu = [];
+var output_data = {
+	element: []
+  };
+const Title = styled.h1.attrs({
+	className: "h1",
+})``;
 
-// const Wrapper = styled.div.attrs({
-// 	className: "form-group",
-// })`
-// 	margin: 0 30px;
-// `;
+const Wrapper = styled.div.attrs({
+	className: "form-group",
+})`
+	margin: 0 30px;
+`;
 
-// const Label = styled.label`
-// 	margin: 5px;
-// `;
+const Label = styled.label`
+	margin: 5px;
+`;
 
-// const InputText = styled.input.attrs({
-// 	className: "form-control",
-// })`
-// 	margin: 5px;
-// `;
+const InputText = styled.input.attrs({
+	className: "form-control",
+})`
+	margin: 5px;
+`;
 
-// const Button = styled.button.attrs({
-// 	className: `btn btn-primary`,
-// })`
-// 	margin: 15px 15px 15px 5px;
-// `;
+const Button = styled.button.attrs({
+	className: `btn btn-primary`,
+})`
+	margin: 15px 15px 15px 5px;
+`;
 
-// const CancelButton = styled.a.attrs({
-// 	className: `btn btn-danger`,
-// })`
-// 	margin: 15px 15px 15px 5px;
-// `;
+const CancelButton = styled.a.attrs({
+	className: `btn btn-danger`,
+})`
+	margin: 15px 15px 15px 5px;
+`;
 
-// class SpeakersInsert extends Component {
-// 	constructor(props) {
-// 		super(props);
-// 		this.state = {
-// 			name: "",
-// 			age: "",
-// 			UserName: "",
-// 			email: "",
-// 			Password: "",
-// 			city: "",
-// 			street: "",
-// 			building: "",
-// 			profileImg: "",
-// 		};
-// 	}
-// 	onFileChange = async event => {
-// 		this.setState({ profileImg: event.target.files[0] });
-// 	};
-// 	handleChangeInputName = async event => {
-// 		const name = event.target.value;
-// 		this.setState({ name });
-// 	};
 
-// 	handleChangeInputAge = async event => {
-// 		const age = event.target.value;
-// 		this.setState({ age });
-// 	};
-// 	handleChangeInputUserName = async event => {
-// 		const UserName = event.target.value;
-// 		this.setState({ UserName });
-// 	};
-// 	handleChangeInputEmail = async event => {
-// 		const email = event.target.value;
-// 		this.setState({ email });
-// 	};
-// 	handleChangeInputPassword = async event => {
-// 		const Password = event.target.value;
-// 		this.setState({ Password });
-// 	};
-// 	handleChangeInputCity = async event => {
-// 		const city = event.target.value;
-// 		this.setState({ city });
-// 	};
-// 	handleChangeInputStreet = async event => {
-// 		const street = event.target.value;
-// 		this.setState({ street });
-// 	};
-// 	handleChangeInputBuilding = async event => {
-// 		const building = event.target.value;
-// 		this.setState({ building });
-// 	};
-// 	handleIncludeSpeaker = async () => {
-// 		const {
-// 			name,
-// 			age,
-// 			UserName,
-// 			email,
-// 			Password,
-// 			city,
-// 			street,
-// 			building,
-// 			profileImg,
-// 		} = this.state;
-// 		const payload = {
-// 			name,
-// 			age,
-// 			UserName,
-// 			email,
-// 			Password,
-// 			city,
-// 			street,
-// 			building,
-// 			profileImg,
-// 		};
-// 		console.log("payload " + payload);
-// 		await api.insertSpeaker(payload).then(res => {
-// 			console.log(payload);
-// 			window.alert(`Speaker inserted successfully`);
-// 			this.setState({
-// 				name: "",
-// 				age: "",
-// 				UserName: "",
-// 				email: "",
-// 				Password: "",
-// 				city: "",
-// 				street: "",
-// 				building: "",
-// 				profileImg: "",
-// 			});
-// 		});
-// 	};
+class EventsInsert extends Component {
 
-// 	render() {
-// 		const {
-// 			name,
-// 			age,
-// 			UserName,
-// 			Password,
-// 			email,
-// 			city,
-// 			street,
-// 			building,
-// 			profileImg,
-// 		} = this.state;
-// 		// let { DropdownList } = ReactWidgets;
+	constructor(props) {
+		super(props);
+		this.state = {
+			title: "",
+			description: "",
+			time: "",
+			rating: "",
+			mainSpeaker: "",
+			otherSpeakers: "",
+			profileImg: "",
+		};
+	}
 
-// 		let colors = ["orange", "red", "blue", "purple"];
-// 		return (
-// 			<Wrapper>
-// 				<Title> Add Speaker</Title>
+	componentWillMount = async () => {
+		await api.getAllSpeakers().then(speakers => {
+			console.log(speakers.data.data);
+			SpeakersMenu=speakers.data.data;
+			SpeakersMenu.map(x => ({
 
-// 				<Label>Name: </Label>
-// 				<InputText
-// 					type="text"
-// 					value={name}
-// 					onChange={this.handleChangeInputName}
-// 				/>
-// 				<Label>Age: </Label>
-// 				<InputText
-// 					type="numper"
-// 					value={age}
-// 					onChange={this.handleChangeInputAge}
-// 				/>
-// 				<Label>User Name: </Label>
-// 				<InputText
-// 					type="text"
-// 					value={UserName}
-// 					onChange={this.handleChangeInputUserName}
-// 				/>
-// 				<Label>Email: </Label>
-// 				<InputText
-// 					type="text"
-// 					value={email}
-// 					onChange={this.handleChangeInputEmail}
-// 				/>
-// 				<Label>Password: </Label>
-// 				<InputText
-// 					type="text"
-// 					value={Password}
-// 					onChange={this.handleChangeInputPassword}
-// 				/>
-// 				<Label> Address </Label>
-// 				<Label>city: </Label>
-// 				<InputText
-// 					type="text"
-// 					value={city}
-// 					onChange={this.handleChangeInputCity}
-// 				/>
-// 				<Label>street: </Label>
-// 				<InputText
-// 					type="text"
-// 					value={street}
-// 					onChange={this.handleChangeInputStreet}
-// 				/>
-// 				<Label>building: </Label>
-// 				<DropdownList disabled data={colors} defaultValue={"orange"} />
-// 				<Button onClick={this.handleIncludeSpeaker}>Add Speaker</Button>
-// 				<CancelButton href={"/speakers/list"}>Cancel</CancelButton>
-// 			</Wrapper>
-// 		);
-// 	}
-// }
+			}))
+			console.log(SpeakersMenu[0].name);
 
-// export default SpeakersInsert;
+
+
+		
+			  
+			  for (var key in speakers.data.data) {  
+				var output = {}; // create new empty object on each iteration
+				output.value = speakers.data.data[key]._id;
+				output.label = speakers.data.data[key].name;
+				output_data.element.push(output);
+			  }
+			  console.log(output_data);
+
+		});
+	};
+	onFileChange = async event => {
+		this.setState({ profileImg: event.target.files[0] });
+	};
+	handleChangeInputTitle = async event => {
+		const title = event.target.value;
+		this.setState({ title });
+	};
+
+	handleChangeInputDescription = async event => {
+		const description = event.target.value;
+		this.setState({ description });
+	};
+
+	handleChangeInputMainSpeaker = async mainSpeaker => {
+		this.setState(
+			{ mainSpeaker },
+			() => console.log(`Option selected:`, this.state.mainSpeaker)
+		  );
+	};
+	handleChangeInputOtherSpeakers = otherSpeakers => {
+		this.setState(
+		  { otherSpeakers },
+		  () => console.log(`Option selected:`, this.state.otherSpeakers)
+		);
+	  };
+	handleChangeInputRating = async event => {
+		const rating = event.target.validity.valid
+			? event.target.value
+			: this.state.rating;
+
+		this.setState({ rating });
+	};
+
+	handleChangeInputTime = async event => {
+		const time = event.target.value;
+		this.setState({ time });
+	};
+	handleIncludeEvent = async () => {
+		const {
+			title,
+			description,
+			time,
+			rating,
+		profileImg,
+		} = this.state;
+		const mainSpeaker =this.state.mainSpeaker.value;
+		const otherSpeakers= this.state.otherSpeakers.value;
+		const payload = {
+			title,
+			description,
+			time,
+			rating,
+			mainSpeaker,
+			otherSpeakers,
+			profileImg,
+		};
+		console.log("payload " + payload);
+		await api.insertEvent(payload).then(res => {
+			console.log(payload);
+			window.alert(`Event inserted successfully`);
+			this.setState({
+				title: "",
+				description: "",
+				time: "",
+				rating: "",
+				mainSpeaker: "",
+				otherSpeakers: "",
+				profileImg: "",
+			});
+		});
+	};
+	render() {
+		console.log(output_data.element);
+
+		const {
+			title,
+			description,
+			time,
+			rating,
+			mainSpeaker,
+			otherSpeakers,
+			profileImg,
+		} = this.state;
+		
+		return (
+			<Wrapper>
+				<Title> Add Event</Title>
+				<Label> title: </Label>
+				<InputText
+					type="text"
+					value={title}
+					onChange={this.handleChangeInputTitle}
+				/>
+				<Label>description: </Label>
+				<InputText
+					type="numper"
+					value={description}
+					onChange={this.handleChangeInputDescription}
+				/>
+				<Label>rating: </Label>
+				<InputText
+					type="text"
+					value={rating}
+					onChange={this.handleChangeInputRating}
+				/>
+				<Label>time: </Label>
+				<InputText
+					type="text"
+					value={time}
+					onChange={this.handleChangeInputTime}
+				/>
+				<Label>mainSpeaker: </Label>
+				<Select
+					value={mainSpeaker}
+					onChange={this.handleChangeInputMainSpeaker}
+					options={output_data.element}
+				/>
+				<Label>otherSpeakers: </Label>
+
+				<Select
+					value={otherSpeakers}
+					onChange={this.handleChangeInputOtherSpeakers}
+					options={output_data.element}
+				/>
+
+				<div className="container mt-4">
+					<h1 className="display-4 text-center mb-4">
+						<i className="fab fa-react" /> Upload Image
+					</h1>
+
+					<FileUpload Key="fromEvent" />
+				</div>
+				<Button onClick={this.handleIncludeEvent}>Add Event</Button>
+				<CancelButton href={"/speakers/list"}>Cancel</CancelButton>
+			</Wrapper>
+		);
+	}
+}
+
+export default EventsInsert;
